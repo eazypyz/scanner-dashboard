@@ -1,0 +1,64 @@
+name: Scan Domains
+
+on:
+  schedule:
+    - cron: '0 0 * * *'   # Setiap hari pukul 00:00 UTC
+  workflow_dispatch:        # Bisa dijalankan manual
+
+permissions:
+  contents: write
+
+concurrency:
+  group: scan
+  cancel-in-progress: false
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300      # Maksimal 5 jam
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Cache Playwright
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('scanner/package-lock.json') }}
+
+      - name: Install dependencies
+        working-directory: ./scanner
+        run: npm ci
+
+      - name: Install Playwright Chromium
+        working-directory: ./scanner
+        run: npx playwright install chromium
+
+      - name: Run Scanner
+        working-directory: ./scanner
+        env:
+          SOURCE_REPO: ${{ vars.SOURCE_REPO || 'OWNER/asset-dashboard' }}
+          SOURCE_BRANCH: ${{ vars.SOURCE_BRANCH || 'main' }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CONCURRENCY: ${{ vars.CONCURRENCY || '5' }}
+          MIN_RESCAN_HOURS: ${{ vars.MIN_RESCAN_HOURS || '24' }}
+          MAX_DOMAINS: ${{ vars.MAX_DOMAINS || '0' }}
+        run: npm run scan
+
+      - name: Commit & Push Results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add results/ screenshots/
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: update scan results [$(date -u +%Y-%m-%d\ %H:%M:%S\ UTC)]"
+            git push
+          fi
