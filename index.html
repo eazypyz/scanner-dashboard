@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scanner Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Scanner Dashboard</h1>
+    <div class="stats" id="stats">Memuat statistik...</div>
+  </header>
+
+  <main>
+    <div class="controls">
+      <input type="text" id="search" placeholder="🔍 Cari domain..." />
+      <select id="filterStatus">
+        <option value="all">Semua Status</option>
+        <option value="success">Sukses (2xx)</option>
+        <option value="redirect">Redirect (3xx)</option>
+        <option value="clientError">Client Error (4xx)</option>
+        <option value="serverError">Server Error (5xx)</option>
+        <option value="failed">Gagal Diakses</option>
+      </select>
+      <select id="filterHttps">
+        <option value="all">Semua Protokol</option>
+        <option value="yes">HTTPS Aktif</option>
+        <option value="no">HTTP Saja</option>
+      </select>
+      <select id="sortBy">
+        <option value="domain">Domain (A-Z)</option>
+        <option value="scannedAt">Waktu Scan (Terbaru)</option>
+        <option value="statusCode">Status Code</option>
+        <option value="responseTime">Response Time</option>
+      </select>
+      <button id="refreshBtn">🔄 Refresh Data</button>
+    </div>
+
+    <div id="grid" class="grid">
+      <div class="loading">Memuat data...</div>
+    </div>
+
+    <div id="pagination" class="pagination"></div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
