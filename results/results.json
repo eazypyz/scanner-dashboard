@@ -1,0 +1,84 @@
+{
+  "scannedAt": "2026-06-30T05:27:37.239Z",
+  "domains": {
+    "apple.com": {
+      "domain": "apple.com",
+      "statusCode": 200,
+      "title": "Apple",
+      "isHttps": true,
+      "finalUrl": "https://www.apple.com/",
+      "responseTime": 1151,
+      "screenshot": "screenshots/apple.com.png",
+      "scannedAt": "2026-06-30T05:27:08.385Z",
+      "success": true
+    },
+    "chess.com": {
+      "domain": "chess.com",
+      "statusCode": 200,
+      "title": "Chess.com - Play Chess Online - Free Games",
+      "isHttps": true,
+      "finalUrl": "https://www.chess.com/",
+      "responseTime": 2163,
+      "screenshot": "screenshots/chess.com.png",
+      "scannedAt": "2026-06-30T05:27:09.280Z",
+      "success": true
+    },
+    "permatabank.com": {
+      "domain": "permatabank.com",
+      "statusCode": 403,
+      "title": "Access Denied",
+      "isHttps": true,
+      "finalUrl": "https://www.permatabank.com/",
+      "responseTime": 552,
+      "screenshot": "screenshots/permatabank.com.png",
+      "scannedAt": "2026-06-30T05:27:10.989Z",
+      "success": true
+    },
+    "websunday.net": {
+      "domain": "websunday.net",
+      "statusCode": 200,
+      "title": "少年サンデー",
+      "isHttps": true,
+      "finalUrl": "https://websunday.net/",
+      "responseTime": 5450,
+      "screenshot": "screenshots/websunday.net.png",
+      "scannedAt": "2026-06-30T05:27:15.561Z",
+      "success": true
+    },
+    "bochk.com": {
+      "domain": "bochk.com",
+      "statusCode": 200,
+      "title": "Bank of China (Hong Kong) Limited",
+      "isHttps": true,
+      "finalUrl": "https://www.bochk.com/en/home.html",
+      "responseTime": 15648,
+      "screenshot": "screenshots/bochk.com.png",
+      "scannedAt": "2026-06-30T05:27:24.890Z",
+      "success": true
+    },
+    "epicgames.com": {
+      "domain": "epicgames.com",
+      "statusCode": 403,
+      "title": "",
+      "isHttps": true,
+      "finalUrl": "https://www.epicgames.com/",
+      "responseTime": 114,
+      "screenshot": null,
+      "scannedAt": "2026-06-30T05:27:36.972Z",
+      "success": false,
+      "error": "page.goto: Timeout 30000ms exceeded.\nCall log:\n  - navigating to \"https://www.epicgames.com/\", waiting until \"networkidle\"\n"
+    },
+    "kredivo.com": {
+      "domain": "kredivo.com",
+      "statusCode": 200,
+      "title": "",
+      "isHttps": true,
+      "finalUrl": "https://kredivo.com/",
+      "responseTime": 880,
+      "screenshot": null,
+      "scannedAt": "2026-06-30T05:27:37.238Z",
+      "success": false,
+      "error": "page.goto: Timeout 30000ms exceeded.\nCall log:\n  - navigating to \"https://kredivo.com/\", waiting until \"networkidle\"\n"
+    }
+  }
+}
