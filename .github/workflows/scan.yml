@@ -34,7 +34,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./scanner
-        run: npm ci
+        run: npm install
 
       - name: Install Playwright Chromium
         working-directory: ./scanner
