@@ -1,0 +1,11 @@
+{
+  "name": "scanner-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "scan": "node index.js"
+  },
+  "dependencies": {
+    "playwright": "^1.45.0"
+  }
+}
