@@ -79,7 +79,3 @@ Buka `https://OWNER.github.io/scanner-dashboard/` (ganti `OWNER` dengan username
 - **Scanner**: Node.js 20, Playwright (Chromium)
 - **CI/CD**: GitHub Actions
 - **Hosting**: GitHub Pages
-
-## Lisensi
-
-MIT
