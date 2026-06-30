@@ -46,16 +46,75 @@ async function fetchGitTree() {
   return json.tree;
 }
 
-function extractDomains(tree) {
-  const domains = new Set();
-  for (const item of tree) {
-    if (item.type !== 'blob') continue;
-    if (!item.path.startsWith(CONFIG.domainsPath)) continue;
-    if (!item.path.endsWith('.json')) continue;
-    const filename = path.basename(item.path, '.json');
-    if (filename) domains.add(filename.toLowerCase());
+async function fetchRawFile(path) {
+  const url = `https://raw.githubusercontent.com/${CONFIG.sourceRepo}/${CONFIG.sourceBranch}/${path}`;
+  const res = await httpsGet(url);
+  if (res.statusCode !== 200) throw new Error(`HTTP ${res.statusCode} untuk ${path}`);
+  return res.data;
+}
+
+/**
+ * Mengekstrak semua host (domain/subdomain) dari file JSON
+ * Format yang didukung:
+ * - { domain: "example.com", subdomains: [{ host: "sub.example.com" }, ...] }
+ * - { subdomains: ["sub1.example.com", "sub2.example.com"] }
+ * - ["sub1.example.com", "sub2.example.com"]
+ * - "example.com"
+ */
+function extractHostsFromJson(content, filename) {
+  const hosts = new Set();
+  
+  let data;
+  try {
+    data = JSON.parse(content);
+  } catch (e) {
+    console.warn(`⚠️  Gagal parse JSON: ${filename}`);
+    return [];
   }
-  return Array.from(domains);
+
+  // Format 1: { domain: "example.com", subdomains: [{ host: "..." }] }
+  if (data.subdomains && Array.isArray(data.subdomains)) {
+    for (const item of data.subdomains) {
+      if (typeof item === 'string') {
+        hosts.add(item.toLowerCase());
+      } else if (item && typeof item === 'object') {
+        // Ambil dari property 'host' atau 'domain' atau 'name' atau 'subdomain'
+        const host = item.host || item.domain || item.name || item.subdomain;
+        if (host) hosts.add(host.toLowerCase());
+      }
+    }
+  }
+
+  // Format 2: { domains: ["sub1.example.com", ...] }
+  if (data.domains && Array.isArray(data.domains)) {
+    for (const d of data.domains) {
+      if (typeof d === 'string') hosts.add(d.toLowerCase());
+    }
+  }
+
+  // Format 3: Array langsung
+  if (Array.isArray(data)) {
+    for (const item of data) {
+      if (typeof item === 'string') hosts.add(item.toLowerCase());
+      else if (item && typeof item === 'object') {
+        const host = item.host || item.domain || item.name || item.subdomain;
+        if (host) hosts.add(host.toLowerCase());
+      }
+    }
+  }
+
+  // Format 4: { domain: "example.com" } tanpa subdomains
+  if (data.domain && typeof data.domain === 'string' && hosts.size === 0) {
+    hosts.add(data.domain.toLowerCase());
+  }
+
+  // Fallback: gunakan nama file sebagai domain jika tidak ada host
+  if (hosts.size === 0) {
+    const fromFilename = path.basename(filename, '.json');
+    if (fromFilename) hosts.add(fromFilename.toLowerCase());
+  }
+
+  return Array.from(hosts);
 }
 
 async function loadExistingResults() {
@@ -239,8 +298,35 @@ async function main() {
 
   console.log('📡 Mengambil tree dari GitHub API...');
   const tree = await fetchGitTree();
-  let domains = extractDomains(tree);
-  console.log(`📁 Ditemukan ${domains.length} domain`);
+  
+  // Filter hanya file .json di data/domains/
+  const jsonFiles = tree.filter(item => 
+    item.type === 'blob' && 
+    item.path.startsWith(CONFIG.domainsPath) && 
+    item.path.endsWith('.json')
+  );
+  
+  console.log(`📁 Ditemukan ${jsonFiles.length} file JSON`);
+
+  // Ambil semua host dari setiap file JSON
+  console.log('📖 Membaca isi file JSON dan mengekstrak host...');
+  const allHosts = new Set();
+  
+  for (const file of jsonFiles) {
+    try {
+      const content = await fetchRawFile(file.path);
+      const hosts = extractHostsFromJson(content, file.name);
+      for (const host of hosts) {
+        allHosts.add(host);
+      }
+      console.log(`  📄 ${file.name}: ${hosts.length} host ditemukan`);
+    } catch (err) {
+      console.warn(`  ⚠️  Gagal baca ${file.name}: ${err.message}`);
+    }
+  }
+
+  let domains = Array.from(allHosts);
+  console.log(`🌐 Total unique host yang akan discan: ${domains.length}`);
 
   if (CONFIG.maxDomains > 0) {
     domains = domains.slice(0, CONFIG.maxDomains);
