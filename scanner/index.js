@@ -7,7 +7,7 @@ const { chromium } = require('playwright');
 const CONFIG = {
   sourceRepo: process.env.SOURCE_REPO || 'eazypyz/asset-dashboard',
   sourceBranch: process.env.SOURCE_BRANCH || 'main',
-  domainsPath: 'data/domains',
+  domainsPath: 'data/history',
   resultsFile: path.join(__dirname, '..', 'results', 'results.json'),
   screenshotsDir: path.join(__dirname, '..', 'screenshots'),
   concurrency: parseInt(process.env.CONCURRENCY) || 5,
