@@ -1,0 +1,74 @@
+{
+  "scannedAt": "2026-07-01T14:48:32.669Z",
+  "domains": {
+    "jype.com": {
+      "domain": "jype.com",
+      "statusCode": 200,
+      "title": "JYP Entertainment",
+      "isHttps": true,
+      "finalUrl": "https://www.jype.com/",
+      "responseTime": 9719,
+      "screenshot": "screenshots/jype.com.png",
+      "scannedAt": "2026-07-01T14:48:14.006Z",
+      "success": true
+    },
+    "wise.com": {
+      "domain": "wise.com",
+      "statusCode": 200,
+      "title": "Wise: The international account | Money without borders | Wise United States",
+      "isHttps": true,
+      "finalUrl": "https://wise.com/",
+      "responseTime": 1897,
+      "screenshot": "screenshots/wise.com.png",
+      "scannedAt": "2026-07-01T14:48:18.852Z",
+      "success": true
+    },
+    "smtown.com": {
+      "domain": "smtown.com",
+      "statusCode": 200,
+      "title": "SMTOWN | 팬에게 필요한 모든 기능, SMTOWN APP 하나로",
+      "isHttps": true,
+      "finalUrl": "https://smtown.com/",
+      "responseTime": 19342,
+      "screenshot": "screenshots/smtown.com.png",
+      "scannedAt": "2026-07-01T14:48:22.147Z",
+      "success": true
+    },
+    "blibli.com": {
+      "domain": "blibli.com",
+      "statusCode": 403,
+      "title": "",
+      "isHttps": true,
+      "finalUrl": "https://www.blibli.com/",
+      "responseTime": 385,
+      "screenshot": null,
+      "scannedAt": "2026-07-01T14:48:32.646Z",
+      "success": false,
+      "error": "page.goto: Timeout 30000ms exceeded.\nCall log:\n  - navigating to \"https://www.blibli.com/\", waiting until \"networkidle\"\n"
+    },
+    "fifa.com": {
+      "domain": "fifa.com",
+      "statusCode": 200,
+      "title": "",
+      "isHttps": true,
+      "finalUrl": "https://www.fifa.com/",
+      "responseTime": 437,
+      "screenshot": null,
+      "scannedAt": "2026-07-01T14:48:32.650Z",
+      "success": false,
+      "error": "page.goto: Timeout 30000ms exceeded.\nCall log:\n  - navigating to \"https://www.fifa.com/\", waiting until \"networkidle\"\n"
+    },
+    "bov.com": {
+      "domain": "bov.com",
+      "statusCode": 403,
+      "title": "",
+      "isHttps": true,
+      "finalUrl": "https://bov.com/",
+      "responseTime": 112,
+      "screenshot": null,
+      "scannedAt": "2026-07-01T14:48:32.669Z",
+      "success": false,
+      "error": "page.goto: Timeout 30000ms exceeded.\nCall log:\n  - navigating to \"https://bov.com/\", waiting until \"networkidle\"\n"
+    }
+  }
+}
