@@ -1,8 +1,6 @@
 name: Scan Domains
 
 on:
-  schedule:
-    - cron: '0 0 * * *'   # Setiap hari pukul 00:00 UTC
   workflow_dispatch:        # Bisa dijalankan manual
 
 permissions:
